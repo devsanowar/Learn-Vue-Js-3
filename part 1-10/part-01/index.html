@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Full Height Layout</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="header">
+        <h2>Vue Js 3</h2>
+      </header>
+
+      <main class="content">
+        <div class="card" id="app">
+          <h3>Number Calculator</h3>
+          <label>Enter Number</label>
+          <!-- <input :value="inputNumber" placeholder="Enter Number" @input="handleNumber" /> -->
+          <input placeholder="Enter Number" v-model.number="inputNumber" />
+
+          <div class="btn-group">
+            <button @click="getDouble" class="btn double">Double</button>
+            <button @click="getSquire" class="btn square">Square</button>
+            <button @click="addNumber" class="btn square">Add</button>
+            <button @click="getReset" class="btn reset">Reset</button>
+          </div>
+
+          <div style="margin-top: 10px;">Number : {{ inputNumber }}</div><br>
+          <div>Result : {{ result }}</div>
+        </div>
+      </main>
+
+      <footer class="footer">Footer</footer>
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+      createApp({
+        setup() {
+          const courseTitle = ref("Vue js 3 course");
+          const inputNumber = ref(0);
+          const result = ref('');
+          const handleNumber = (e) => {
+             inputNumber.value = e.target.value;
+          }
+
+          const getDouble = () => {
+             result.value = inputNumber.value * 2;
+             
+          }
+
+          const getSquire = () => {
+            result.value = inputNumber.value ** 2;
+          }
+
+          const addNumber = () => {
+            result.value = inputNumber.value + 10;
+          }
+
+          const getReset = () => {
+            inputNumber.value = '';
+            result.value = '';
+
+          }
+          
+          return { handleNumber, inputNumber, result, getDouble, getSquire, getReset, addNumber };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

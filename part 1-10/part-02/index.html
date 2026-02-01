@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue Multiple Class Binding</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    .active { background: green; color: white; padding: 10px; }
+    .error { background: red; color: white; }
+    .disabled { background: gray; color: black; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <p :class="{ 
+        active: isActive, 
+        error: hasError, 
+        disabled: isDisabled 
+      }">
+    Multi Logic Status
+  </p>
+
+  <br>
+
+  <button @click="isActive = !isActive">Toggle Active</button>
+  <button @click="hasError = !hasError">Toggle Error</button>
+  <button @click="isDisabled = !isDisabled">Toggle Disabled</button>
+</div>
+
+<script>
+const { createApp, ref } = Vue;
+
+createApp({
+  setup() {
+    const isActive = ref(true);
+    const hasError = ref(false);
+    const isDisabled = ref(false);
+
+    return { isActive, hasError, isDisabled };
+  }
+}).mount("#app");
+</script>
+
+</body>
+</html>
