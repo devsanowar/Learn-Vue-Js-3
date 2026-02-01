@@ -6,6 +6,34 @@
     <title>Vue Js Form module</title>
 </head>
 <body>
-    
+    <div id="app">
+        <form @submit.prevent="handleForm">
+            <label for="">Name</label>
+            <input v-model.trim="name" placeholder="Enter Name"><br>
+            <button type="submit">Save</button>
+            <hr>
+            <p>{{ name }}</p>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp, ref } = Vue;
+        createApp({
+            setup() {
+                const name = ref('');
+                const handleForm = () => {
+                    console.log('saved');
+                    alert("Successfully saved");
+                          name.value = '';
+                 }
+
+                 return {
+                    handleForm,
+                    name
+                 }
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>
