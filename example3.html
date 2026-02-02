@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed Method</title>
+</head>
+<body>
+
+    <div id="app">
+        <label for="">First Name</label>
+        <input type="text" v-model="search" placeholder="Search here.."> <br>
+        
+        <ul>
+            <li v-for="(skill, index) in filterSkills" :key="index">
+                {{ skill }}
+            </li>
+        </ul>
+    </div>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp, ref, computed } = Vue;
+        createApp({
+            setup() {
+                let skills = ref(['HTML', 'CSS', 'JS', 'VUE', 'JS', 'PHP', 'PHP', 'LARAVEL', 'WORDPRESS']);
+                
+                let search = ref('');
+               const filterSkills = computed( () =>{
+                    return skills.value.filter( skill => skill.toLowerCase().includes(search.value.toLowerCase()));
+               });
+
+               return {
+                skills,
+                search,
+                filterSkills
+               }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
