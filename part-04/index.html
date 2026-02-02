@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed Method</title>
+</head>
+<body>
+  <div id="app">
+    <div class="form-group">
+        <label for="">Price</label>
+        <input v-model.number="price" placeholder="price">
+        <p>Total with vat : {{ totalPrice }}</p>
+    </div>
+  </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp, ref, computed } = Vue;
+        createApp({
+            setup(){
+                let price = ref('');
+
+                const totalPrice = computed( () => {
+                   return price.value + (price.value * 0.15);
+                });
+
+                return {
+                    price, totalPrice
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computed Method</title>
+</head>
+<body>
+
+    <div id="app">
+        <label for="">First Name</label>
+        <input type="text" v-model="firstName" placeholder="Enter First Name"> <br>
+        <label for="">Last Name</label>
+        <input type="text" v-model="lastName" placeholder="Enter Last Name">
+
+        <p>Full name : {{ fullName }}</p>
+    </div>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp, ref, computed } = Vue;
+        createApp({
+            setup() {
+                let firstName = ref('');
+                let lastName = ref('');
+
+                const fullName = computed( () => {
+                    return firstName.value + ' ' +lastName.value;
+                });
+
+                return {
+                    firstName,
+                    lastName,
+                    fullName
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
