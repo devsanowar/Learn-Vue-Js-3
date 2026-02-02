@@ -1,39 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue Js Form module</title>
+  <meta charset="UTF-8" />
+  <title>Vue 3 Form Module</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, select { margin: 5px 0; padding: 6px; }
+    .tag {
+      display: inline-block;
+      background: #42b983;
+      color: #fff;
+      padding: 4px 8px;
+      margin: 3px;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-    <div id="app">
-        <form @submit.prevent="handleForm">
-            <label for="">Name</label>
-            <input v-model.trim="name" placeholder="Enter Name"><br>
-            <button type="submit">Save</button>
-            <hr>
-            <p>{{ name }}</p>
-        </form>
+
+<div id="app">
+  <h2>Vue 3 Form Submit System</h2>
+
+  <form @submit.prevent="handleSubmit">
+
+    <!-- Name -->
+    <div>
+      <label>Name:</label><br>
+      <input type="text" v-model="form.name" required>
     </div>
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script>
-        const { createApp, ref } = Vue;
-        createApp({
-            setup() {
-                const name = ref('');
-                const handleForm = () => {
-                    console.log('saved');
-                    alert("Successfully saved");
-                          name.value = '';
-                 }
+    <!-- Email -->
+    <div>
+      <label>Email:</label><br>
+      <input type="email" v-model="form.email" required>
+    </div>
 
-                 return {
-                    handleForm,
-                    name
-                 }
-            }
-        }).mount('#app');
-    </script>
+    <!-- Skills -->
+    <div>
+      <label>Skills:</label><br>
+      <select v-model="selectedSkill">
+        <option disabled value="">Select skill</option>
+        <option v-for="skill in skills" :key="skill">
+          {{ skill }}
+        </option>
+      </select>
+      <button type="button" @click="addSkill">Add</button>
+
+      <div>
+        <span v-for="(skill, index) in form.skills" :key="index" class="tag">
+          {{ skill }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Gender (Radio) -->
+    <div>
+      <label>Gender:</label><br>
+      <input type="radio" value="Male" v-model="form.gender"> Male
+      <input type="radio" value="Female" v-model="form.gender"> Female
+    </div>
+
+    <!-- Hobbies (Checkbox) -->
+    <div>
+      <label>Hobbies:</label><br>
+      <input type="checkbox" value="Reading" v-model="form.hobbies"> Reading
+      <input type="checkbox" value="Traveling" v-model="form.hobbies"> Traveling
+      <input type="checkbox" value="Gaming" v-model="form.hobbies"> Gaming
+    </div>
+
+    <br>
+
+    <button type="submit">Submit</button>
+    <button type="button" @click="resetForm">Reset</button>
+  </form>
+
+  <hr>
+
+  <!-- Preview -->
+  <h3>Submitted Data</h3>
+  <pre>{{ form }}</pre>
+</div>
+
+<script>
+const { createApp, ref, reactive } = Vue;
+
+createApp({
+  setup() {
+    const form = reactive({
+      name: '',
+      email: '',
+      skills: [],
+      gender: '',
+      hobbies: []
+    });
+
+    const skills = ['Vue', 'Laravel', 'React', 'PHP'];
+    const selectedSkill = ref('');
+
+    const addSkill = () => {
+      if (selectedSkill.value && !form.skills.includes(selectedSkill.value)) {
+        form.skills.push(selectedSkill.value);
+        selectedSkill.value = '';
+      }
+    };
+
+    const handleSubmit = () => {
+      console.log('Form Data:', { ...form });
+      alert('Form submitted successfully!');
+    };
+
+    const resetForm = () => {
+      form.name = '';
+      form.email = '';
+      form.skills = [];
+      form.gender = '';
+      form.hobbies = [];
+    };
+
+    return {
+      form,
+      skills,
+      selectedSkill,
+      addSkill,
+      handleSubmit,
+      resetForm
+    };
+  }
+}).mount('#app');
+</script>
+
 </body>
 </html>
